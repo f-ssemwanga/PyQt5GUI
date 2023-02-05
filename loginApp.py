@@ -1,6 +1,6 @@
 #import required modules
 from  PyQt5 import QtCore, QtGui, QtWidgets, uic
-#from PyQt5.QtCore import Qt
+import sqlite3
 
 #widget class
 class Ui(QtWidgets.QMainWindow):
@@ -18,19 +18,27 @@ class Ui(QtWidgets.QMainWindow):
    
     #Event handler methods are added here
     def loginButtonMethod(self):
-        username = self.userNameInput.text().lower()
-        password = self.passwordInput.text()     
-        print(f'username: {username}| password: {password}')  # only for testing purposes
+        enteredUsername = self.userNameInput.text().lower()
+        enteredPassword = self.passwordInput.text()     
+        print(f'username: {enteredUsername}| password: {enteredPassword}')  # only for testing purposes
         
         '''Perform some validation - presence check! and display appropriate message box'''
-        if username =="" or password =="":
+        if enteredUsername =="" or enteredPassword =="":
             messageBox('Blank Fields detected!','You must enter a username and password!', 'warning')
-            
+        else:
+            cred =selectStatementHelper('password','users','username',(enteredUsername,))
+            self.clearButtonMethod()
+            try:
+                if cred[0][0] ==enteredPassword:
+                    #inform user that they logged in successfuly
+                    messageBox('Login success', 'You have loggin in successfully!')
+            except IndexError:
+                messageBox('Login failed!', 'Incorrect credentials entered. Please try agan','warning')
         
     def clearButtonMethod(self):
-        print('Clear Button was clicked')
-
-
+        #clear button functionality
+        self.userNameInput.setText('')
+        self.passwordInput.setText('')
 
 
 #create a messageBox function to display warnings and confirmations
@@ -51,8 +59,35 @@ def messageBox(title, content,iconType="info"):
     msgBox.setWindowTitle(title)        
     #show the message box
     msgBox.exec()
-   
-   
+#connecting to the database
+def connection():
+    #this method establishes a connection to the database
+    con =sqlite3.connect('userAndFilms.db')
+    cur = con.cursor()
+    return con, cur   
+def executeStatementHelper(query, args=None):
+    #connects and executes a given query on the database
+    con,cur = connection()
+    if not args:
+        cur.execute(query)
+    else:
+        cur.execute(query, args)
+    #fetch data from the database and return it into the variable "selectedData"
+    selectedData = cur.fetchall()
+    #commit changes if there are any, close connection and return data
+    con.commit()
+    con.close()
+    return selectedData
+def selectStatementHelper(fields,table,criteria =None, args=None):
+    #constructs a select statement based on entered arguments
+    if not criteria:
+        query = f'SELECT {fields} FROM {table}'
+    else:
+        query =f'''SELECT {fields} FROM {table}
+        WHERE {criteria}=?'''
+    #return results of execution of the query using the execute statement helper
+    return(query,args)
+
     
 def mainApplication():
     app = QtWidgets.QApplication ([]) 
