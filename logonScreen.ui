@@ -37,6 +37,7 @@ QPushButton#btnClear,#btnLogin{
 color:	rgb(255, 255, 255);
 background:#687476;
 
+
 }
 QLineEdit{
 background:rgb(206, 244, 246);
