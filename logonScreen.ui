@@ -13,6 +13,29 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">/*individually say which item you are changing and change it
+ if no selector is set then your styles will be applied to the body and all child widgets within the body will inherit those styles
+*/
+QLabel#lblWindowBg{
+background:rgb(170, 170, 255);
+}
+
+QLabel#lblMainTitle{
+background:rgb(186, 121, 250);
+}
+QPushButton#btnClear,#btnLogin{
+color:	rgb(255, 255, 255);
+background:#687476;
+}
+QLineEdit{
+background:rgb(206, 244, 246);
+}
+QLineEdit:focus{
+background:rgb(170, 255, 0);
+color:black;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="lblMainTitle">
     <property name="geometry">
@@ -30,7 +53,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Year 12 GUI Example</string>
+     <string>Login Screen</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -149,6 +172,30 @@
      <string>Clear</string>
     </property>
    </widget>
+   <widget class="QLabel" name="lblWindowBg">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>381</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>lblWindowBg</zorder>
+   <zorder>lblMainTitle</zorder>
+   <zorder>userNameInput</zorder>
+   <zorder>userNameLabel</zorder>
+   <zorder>passwordInput</zorder>
+   <zorder>passwordLabel</zorder>
+   <zorder>btnLogin</zorder>
+   <zorder>btnClear</zorder>
   </widget>
  </widget>
  <resources/>
