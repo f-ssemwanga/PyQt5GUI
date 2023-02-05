@@ -10,6 +10,15 @@
     <height>300</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>380</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -27,6 +36,7 @@ background:rgb(186, 121, 250);
 QPushButton#btnClear,#btnLogin{
 color:	rgb(255, 255, 255);
 background:#687476;
+
 }
 QLineEdit{
 background:rgb(206, 244, 246);
@@ -34,13 +44,20 @@ background:rgb(206, 244, 246);
 QLineEdit:focus{
 background:rgb(170, 255, 0);
 color:black;
+}
+QLabel#userNameLabel,#passwordLabel{
+color:rgb(255, 255, 255);
+}
+QPushButton#btnClear:hover,#btnLogin:hover{
+background-color:rgb(0, 83, 121);
+
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="lblMainTitle">
     <property name="geometry">
      <rect>
-      <x>4</x>
+      <x>0</x>
       <y>-1</y>
       <width>401</width>
       <height>51</height>
@@ -86,6 +103,12 @@ color:black;
       <height>21</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>201</width>
+      <height>16777215</height>
+     </size>
+    </property>
     <property name="font">
      <font>
       <family>Arial</family>
@@ -93,7 +116,7 @@ color:black;
      </font>
     </property>
     <property name="text">
-     <string>Enter a Username:</string>
+     <string>Username:</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="passwordInput">
@@ -133,7 +156,7 @@ color:black;
      </font>
     </property>
     <property name="text">
-     <string>Enter Your Password: </string>
+     <string>Password: </string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnLogin">
@@ -149,6 +172,9 @@ color:black;
      <font>
       <pointsize>12</pointsize>
      </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string>Login</string>
@@ -168,6 +194,9 @@ color:black;
       <pointsize>12</pointsize>
      </font>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Clear</string>
     </property>
@@ -181,21 +210,33 @@ color:black;
       <height>301</height>
      </rect>
     </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>301</height>
+     </size>
+    </property>
     <property name="styleSheet">
      <string notr="true"/>
     </property>
     <property name="text">
      <string/>
     </property>
+    <property name="pixmap">
+     <pixmap>testbg.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
    <zorder>lblWindowBg</zorder>
    <zorder>lblMainTitle</zorder>
    <zorder>userNameInput</zorder>
-   <zorder>userNameLabel</zorder>
    <zorder>passwordInput</zorder>
-   <zorder>passwordLabel</zorder>
    <zorder>btnLogin</zorder>
    <zorder>btnClear</zorder>
+   <zorder>passwordLabel</zorder>
+   <zorder>userNameLabel</zorder>
   </widget>
  </widget>
  <resources/>
