@@ -18,6 +18,7 @@ class Ui(QtWidgets.QMainWindow):
    
     #Event handler methods are added here
     def loginButtonMethod(self):
+        #login button event handler method
         enteredUsername = self.userNameInput.text().lower()
         enteredPassword = self.passwordInput.text()     
         print(f'username: {enteredUsername}| password: {enteredPassword}')  # only for testing purposes
@@ -27,19 +28,24 @@ class Ui(QtWidgets.QMainWindow):
             messageBox('Blank Fields detected!','You must enter a username and password!', 'warning')
         else:
             cred =selectStatementHelper('password','users','username',(enteredUsername,))
+            print(f'credentials{cred}') #only for testing connection and query results
             self.clearButtonMethod()
             try:
                 if cred[0][0] ==enteredPassword:
                     #inform user that they logged in successfuly
                     messageBox('Login success', 'You have loggin in successfully!')
+                    self.close() #closes the current window
+                else:
+                    #inform the user login attempt failed
+                    messageBox('Login attempt failed!', 'Incorrect password entered, please try again','warning')
             except IndexError:
                 messageBox('Login failed!', 'Incorrect credentials entered. Please try agan','warning')
         
     def clearButtonMethod(self):
-        #clear button functionality
+        #clear button event handler method
         self.userNameInput.setText('')
         self.passwordInput.setText('')
-
+    #adding key bindings
 
 #create a messageBox function to display warnings and confirmations
 def messageBox(title, content,iconType="info"):
@@ -62,8 +68,9 @@ def messageBox(title, content,iconType="info"):
 #connecting to the database
 def connection():
     #this method establishes a connection to the database
-    con =sqlite3.connect('userAndFilms.db')
+    con =sqlite3.connect('usersAndFilms.db')
     cur = con.cursor()
+    print(con,cur)
     return con, cur   
 def executeStatementHelper(query, args=None):
     #connects and executes a given query on the database
@@ -78,15 +85,14 @@ def executeStatementHelper(query, args=None):
     con.commit()
     con.close()
     return selectedData
-def selectStatementHelper(fields,table,criteria =None, args=None):
+def selectStatementHelper(fields,table,criteria=None, args=None):
     #constructs a select statement based on entered arguments
     if not criteria:
         query = f'SELECT {fields} FROM {table}'
     else:
-        query =f'''SELECT {fields} FROM {table}
-        WHERE {criteria}=?'''
+        query =f'''SELECT {fields} FROM {table} WHERE {criteria}=?'''
     #return results of execution of the query using the execute statement helper
-    return(query,args)
+    return executeStatementHelper(query,args)
 
     
 def mainApplication():
