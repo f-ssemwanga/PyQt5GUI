@@ -1,5 +1,6 @@
 #import required modules
 from  PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtCore import Qt
 import sqlite3
 
 #widget class
@@ -13,7 +14,6 @@ class Ui(QtWidgets.QMainWindow):
         #Button event listeners / connection to buttons on the form
         self.btnLogin.clicked.connect(self.loginButtonMethod)
         self.btnClear.clicked.connect(self.clearButtonMethod)
-        
         self.show()
    
     #Event handler methods are added here
@@ -46,6 +46,11 @@ class Ui(QtWidgets.QMainWindow):
         self.userNameInput.setText('')
         self.passwordInput.setText('')
     #adding key bindings
+    def keyPressEvent(self,e):
+        if e.key() == Qt.Key_Escape:
+            self.close()
+        elif e.keyIO == Qt.Key_Return:
+            self.loginButtonMethod()
 
 #create a messageBox function to display warnings and confirmations
 def messageBox(title, content,iconType="info"):
@@ -72,6 +77,7 @@ def connection():
     cur = con.cursor()
     print(con,cur)
     return con, cur   
+#Execute statement helper
 def executeStatementHelper(query, args=None):
     #connects and executes a given query on the database
     con,cur = connection()
